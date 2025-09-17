@@ -1,0 +1,54 @@
+## Creating a new partition:
+
+1. Resize /dev/sda1 to Free Space
+
+    * Select the Partition (/dev/sda1):
+    * In cfdisk, use the arrow keys to select /dev/sda1.
+    * Resize the Partition:
+        - Press the Resize option.
+
+        - Enter the new size. Leave the remaining space for your LFS and swap partitions.
+
+        - Write the Changes:
+            * After resizing, select Write to apply the changes.
+
+            * Confirm that you want to write the changes.
+
+2. Format the Partitions:
+
+    - Once you've resized or recreated your partitions, you'll need to format them.
+    - Format the LFS partition (ext4): 
+    ```
+    sudo mkfs.ext4 /dev/sda2  # Assuming sda2 is the LFS partition
+    ```
+
+3. Create the mount point:
+    ```
+    sudo mkdir -p /mnt/lfs
+    ```
+    - This creates a directory on our host system (our existing Linux OS) that will act as the root ( / ) of the new LFS system.
+    - We’ll treat /mnt/lfs like the root directory of your future LFS system during the build.
+
+4. Mount the LFS partition:
+    ```
+    sudo mount /dev/sda2 /mnt/lfs
+    ```
+    - This attaches our new LFS partition (/dev/sda2) to the /mnt/lfs directory.
+    - Now, anything we put into /mnt/lfs (like source files, built binaries, etc.) is actually stored on our new LFS partition, not our main OS disk.
+
+5. Set the LFS environment variable:
+    ```
+    export LFS=/mnt/lfs
+    ```
+    - This sets a shortcut variable called LFS so we can refer to /mnt/lfs easily in commands.
+    - Many LFS commands in the book will use $LFS — it makes scripting and commands more flexible and readable.
+
+6.  Now set the file mode creation mask (umask) to 022 in case the host distro uses a different default:
+
+    ```
+    umask 022
+    ```
+
+    * Setting the umask to 022 ensures that newly created files and directories are only writable by their owner, but are readable and searchable (only for directories) by anyone (assuming default modes are used by the open(2) system call, new files will end up with permission mode 644 and directories with mode 755). 
+    
+    * An overly-permissive default can leave security holes in the LFS system, and an overly-restrictive default can cause strange issues building or using the LFS system. 
