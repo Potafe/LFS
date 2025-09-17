@@ -52,3 +52,19 @@
     * Setting the umask to 022 ensures that newly created files and directories are only writable by their owner, but are readable and searchable (only for directories) by anyone (assuming default modes are used by the open(2) system call, new files will end up with permission mode 644 and directories with mode 755). 
     
     * An overly-permissive default can leave security holes in the LFS system, and an overly-restrictive default can cause strange issues building or using the LFS system. 
+
+7.  Set the owner and permission mode of the $LFS directory (i.e. the root directory in the newly created file system for the LFS system) to root and 755 in case the host distro has been configured to use a different default for mkfs: 
+    ```
+    chown root:root $LFS
+    chmod 755 $LFS
+    ```
+
+    - 755 = a numeric mode specifying permissions:
+        * 7 for owner = read + write + execute
+        * 5 for group = read + execute
+        * 5 for others = read + execute
+
+8. Then check the mount options with:
+    ```
+    mount | grep $LFS
+    ```
