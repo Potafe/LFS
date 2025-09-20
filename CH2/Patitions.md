@@ -1,5 +1,15 @@
 ## Creating a new partition:
 
+### Option 0: For VMs whose OS is fully on /dev/sda1:
+0. If you are using a VM for your LFS project -> your host OS (VM OS) will most probably be on /dev/sda1
+    
+    * In that case following step 1 is not ideal.
+    * What you should instead do is create a new Hard Disk just for LFS:
+
+
+        ![New_HD](./images/New_HD.png)
+
+### Option 1: Still for partitioning /dev/sda1:
 1. Resize /dev/sda1 to Free Space
 
     * Select the Partition (/dev/sda1):
@@ -14,13 +24,17 @@
 
             * Confirm that you want to write the changes.
 
+### Steps to follow after choosing from above:
 2. Format the Partitions:
 
     - Once you've resized or recreated your partitions, you'll need to format them.
     - Format the LFS partition (ext4): 
     ```
-    sudo mkfs.ext4 /dev/sda2  # Assuming sda2 is the LFS partition
+    sudo mkfs.ext4 /dev/sdb  # Assuming sdb is the LFS partition
     ```
+    - Example:
+    
+        ![Format](./images/Make_FIle_System.png)
 
 3. Create the mount point:
     ```
@@ -68,3 +82,7 @@
     ```
     mount | grep $LFS
     ```
+
+9. Result of above operations (step 3-8):
+
+    ![Mount](./images/Mount.png)
