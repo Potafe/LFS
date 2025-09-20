@@ -70,7 +70,6 @@
 7.  Set the owner and permission mode of the $LFS directory (i.e. the root directory in the newly created file system for the LFS system) to root and 755 in case the host distro has been configured to use a different default for mkfs: 
     ```
     chown root:root $LFS
-    chmod 755 $LFS
     ```
 
     - 755 = a numeric mode specifying permissions:
