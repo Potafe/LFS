@@ -86,3 +86,25 @@
 9. Result of above operations (step 3-8):
 
     ![Mount](./images/Mount.png)
+
+
+---
+### NOTE:
+
+### Set `$LFS` Permanently using the `.bashrc` config file
+
+To make the `$LFS` environment variable persistent, add the following line at the end of your `.bashrc` file:
+
+```
+export LFS=/mnt/lfs
+```
+
+Then, apply the changes by running:
+
+```
+source ~/.bashrc
+```
+
+---
+
+This method ensures that the `$LFS` variable persists across terminal sessions without overly emphasizing the code, keeping it clean and easy to read.
